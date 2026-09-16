@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Learn | CyberLab</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    min-height:100vh;
+    background:#061411;
+    color:#e8fff8;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+header{
+    height:64px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 22px;
+    background:#081c18;
+    border-bottom:1px solid #123b31;
+    position:sticky;
+    top:0;
+    z-index:10;
+}
+
+.logo{
+    color:#35f5b0;
+    font-size:22px;
+    font-weight:800;
+}
+
+nav{
+    display:flex;
+    gap:8px;
+    overflow-x:auto;
+}
+
+nav a{
+    color:#a9c9c0;
+    text-decoration:none;
+    padding:9px 12px;
+    border-radius:8px;
+    font-size:13px;
+    white-space:nowrap;
+}
+
+nav a:hover,
+nav a.active{
+    background:#10352c;
+    color:#35f5b0;
+}
+
+main{
+    width:min(1100px,94%);
+    margin:0 auto;
+    padding:30px 0 50px;
+}
+
+.hero{
+    background:linear-gradient(135deg,#0b251f,#092019);
+    border:1px solid #17473a;
+    border-radius:16px;
+    padding:28px;
+    margin-bottom:22px;
+}
+
+.hero h1{
+    color:#35f5b0;
+    font-size:32px;
+    margin-bottom:10px;
+}
+
+.hero p{
+    color:#a9c9c0;
+    line-height:1.6;
+    max-width:800px;
+}
+
+.section-title{
+    margin:28px 0 14px;
+    color:#35f5b0;
+    font-size:20px;
+}
+
+.lessons{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:16px;
+}
+
+.card{
+    background:#091c18;
+    border:1px solid #164338;
+    border-radius:14px;
+    padding:20px;
+    transition:.2s;
+}
+
+.card:hover{
+    border-color:#35f5b0;
+    transform:translateY(-2px);
+}
+
+.icon{
+    font-size:28px;
+    margin-bottom:10px;
+}
+
+.card h3{
+    color:#e8fff8;
+    margin-bottom:8px;
+}
+
+.card p{
+    color:#9dbbb3;
+    line-height:1.55;
+    font-size:14px;
+}
+
+.points{
+    margin-top:12px;
+    padding-left:18px;
+    color:#b9d4cc;
+    line-height:1.7;
+    font-size:13px;
+}
+
+.lab-box{
+    background:#081b17;
+    border:1px solid #175044;
+    border-radius:14px;
+    padding:22px;
+    margin-top:15px;
+}
+
+.lab-box h3{
+    color:#35f5b0;
+    margin-bottom:8px;
+}
+
+.lab-box p{
+    color:#a9c9c0;
+    line-height:1.6;
+}
+
+.button-row{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-top:16px;
+}
+
+.btn{
+    display:inline-block;
+    background:#35f5b0;
+    color:#03110d;
+    text-decoration:none;
+    font-weight:700;
+    padding:11px 16px;
+    border-radius:8px;
+}
+
+.btn.secondary{
+    background:#10352c;
+    color:#35f5b0;
+    border:1px solid #286452;
+}
+
+.warning{
+    margin-top:24px;
+    padding:18px;
+    background:#201d0b;
+    border:1px solid #665b1c;
+    border-radius:12px;
+    color:#e4dca5;
+    line-height:1.6;
+    font-size:13px;
+}
+
+footer{
+    text-align:center;
+    color:#66877e;
+    font-size:12px;
+    padding:25px 10px;
+    border-top:1px solid #12352d;
+}
+
+@media(max-width:700px){
+    header{
+        padding:0 12px;
+    }
+
+    .logo{
+        font-size:19px;
+    }
+
+    nav a{
+        padding:8px 9px;
+        font-size:12px;
+    }
+
+    main{
+        width:94%;
+        padding-top:20px;
+    }
+
+    .hero{
+        padding:20px;
+    }
+
+    .hero h1{
+        font-size:26px;
+    }
+
+    .lessons{
+        grid-template-columns:1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">🛡️ CyberLab</div>
+
+    <nav>
+        <a href="index.html">HOME</a>
+        <a href="learn.html" class="active">LEARN</a>
+        <a href="lab.html">LAB</a>
+        <a href="network.html">NETWORK</a>
+        <a href="explore.html">EXPLORE</a>
+        <a href="rules.html">RULES</a>
+    </nav>
+</header>
+
+<main>
+
+<section class="hero">
+    <h1>📚 CyberLab Learning Center</h1>
+    <p>
+        Build your cybersecurity knowledge from the fundamentals.
+        Learn how networks, IP addresses, device location, authentication,
+        privacy and defensive security technologies work in the real world.
+    </p>
+</section>
+
+<h2 class="section-title">Core Lessons</h2>
+
+<section class="lessons">
+
+    <article class="card">
+        <div class="icon">🛡️</div>
+        <h3>Cybersecurity Fundamentals</h3>
+        <p>
+            Understand the basic principles used to protect computers,
+            phones, networks, applications and information.
+        </p>
+        <ul class="points">
+            <li>Confidentiality</li>
+            <li>Integrity</li>
+            <li>Availability</li>
+            <li>Threats and vulnerabilities</li>
+        </ul>
+    </article>
+
+    <article class="card">
+        <div class="icon">🌐</div>
+        <h3>IP Address & Networks</h3>
+        <p>
+            Learn what an IP address is and how devices communicate
+            across local networks and the internet.
+        </p>
+        <ul class="points">
+            <li>IPv4 and IPv6</li>
+            <li>Public and private IPs</li>
+            <li>DNS</li>
+            <li>Routers and ISPs</li>
+        </ul>
+    </article>
+
+    <article class="card">
+        <div class="icon">📍</div>
+        <h3>IP Geolocation vs GPS</h3>
+        <p>
+            Understand the important difference between network-based
+            location information and a device's GPS location.
+        </p>
+        <ul class="points">
+            <li>IP location is approximate</li>
+            <li>GPS can provide precise coordinates</li>
+            <li>Browser permission is required for device GPS</li>
+            <li>Location data should be handled responsibly</li>
+        </ul>
+    </article>
+
+    <article class="card">
+        <div class="icon">🔐</div>
+        <h3>Authentication & Password Security</h3>
+        <p>
+            Learn how accounts are protected and why strong authentication
+            is an important part of cybersecurity.
+        </p>
+        <ul class="points">
+            <li>Strong passwords</li>
+            <li>Password hashing</li>
+            <li>Multi-factor authentication</li>
+            <li>Account protection</li>
+        </ul>
+    </article>
+
+    <article class="card">
+        <div class="icon">🕵️</div>
+        <h3>Privacy & Digital Footprints</h3>
+        <p>
+            Learn what information can be exposed online and how users
+            can make safer decisions about their digital information.
+        </p>
+        <ul class="points">
+            <li>Online identifiers</li>
+            <li>Cookies and tracking</li>
+            <li>Location privacy</li>
+            <li>Responsible data handling</li>
+        </ul>
+    </article>
+
+    <article class="card">
+        <div class="icon">🧪</div>
+        <h3>Safe Practical Labs</h3>
+        <p>
+            Apply what you learn using controlled, permission-based
+            exercises designed for cybersecurity education.
+        </p>
+        <ul class="points">
+            <li>Device GPS demonstration</li>
+            <li>Network information</li>
+            <li>DNS and domain concepts</li>
+            <li>Geographic visualization</li>
+        </ul>
+    </article>
+
+</section>
+
+<h2 class="section-title">Practice With CyberLab</h2>
+
+<div class="lab-box">
+    <h3>🧪 Practical Cybersecurity Environment</h3>
+    <p>
+        Move from theory to practical learning. CyberLab's Lab and Network
+        tools demonstrate real browser, network and geographic technologies
+        while keeping the exercises focused on authorized use.
+    </p>
+
+    <div class="button-row">
+        <a class="btn" href="lab.html">OPEN PRACTICAL LAB</a>
+        <a class="btn secondary" href="network.html">NETWORK INTELLIGENCE</a>
+        <a class="btn secondary" href="explore.html">GLOBAL EXPLORER</a>
+    </div>
+</div>
+
+<div class="warning">
+    ⚠️ <strong>AUTHORIZED USE ONLY:</strong>
+    Cybersecurity skills should be practiced only on systems, accounts
+    and devices that you own or have explicit permission to test.
+    Device GPS requires the device owner to grant browser location permission.
+    IP-based geolocation provides approximate network location and does not
+    guarantee the exact physical location of a remote device.
+</div>
+
+</main>
+
+<footer>
+    CyberLab • Learn • Practice • Defend • Use cybersecurity knowledge responsibly.
+</footer>
+
+</body>
+</html>

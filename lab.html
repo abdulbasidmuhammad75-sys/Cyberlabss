@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>CyberLab | Practical Lab</title>
+
+<link rel="stylesheet"
+href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    background:#020807;
+    color:#d9fff3;
+    font-family:Arial,sans-serif;
+    min-height:100vh;
+}
+
+header{
+    height:62px;
+    background:#061713;
+    border-bottom:1px solid #164638;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 16px;
+}
+
+.logo{
+    color:#00ff9c;
+    font-size:21px;
+    font-weight:bold;
+}
+
+nav{
+    display:flex;
+    gap:5px;
+}
+
+nav a{
+    text-decoration:none;
+    color:#82aa9d;
+    font-size:12px;
+    padding:8px;
+}
+
+nav a:hover,
+nav a.active{
+    color:#00ff9c;
+}
+
+main{
+    width:96%;
+    max-width:1450px;
+    margin:17px auto;
+}
+
+.hero{
+    margin-bottom:14px;
+}
+
+.hero h1{
+    color:#00ff9c;
+    font-size:25px;
+}
+
+.hero p{
+    color:#77968c;
+    font-size:13px;
+    margin-top:5px;
+}
+
+.notice{
+    background:#08160f;
+    border:1px solid #6b5c1a;
+    color:#cabe76;
+    padding:12px;
+    border-radius:8px;
+    margin-bottom:13px;
+    font-size:12px;
+    line-height:1.5;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:340px 1fr;
+    gap:13px;
+}
+
+/* CONTROL PANEL */
+
+.controls{
+    background:#061713;
+    border:1px solid #164638;
+    border-radius:9px;
+    padding:14px;
+}
+
+.section-title{
+    color:#00ff9c;
+    font-size:14px;
+    margin-bottom:12px;
+}
+
+.control-card{
+    border:1px solid #164638;
+    background:#04110d;
+    border-radius:7px;
+    padding:11px;
+    margin-bottom:10px;
+}
+
+.control-card h3{
+    color:#b9f8e2;
+    font-size:13px;
+    margin-bottom:5px;
+}
+
+.control-card p{
+    color:#678b7f;
+    font-size:11px;
+    line-height:1.45;
+    margin-bottom:9px;
+}
+
+button{
+    border:0;
+    border-radius:6px;
+    padding:10px 12px;
+    font-weight:bold;
+    cursor:pointer;
+    font-size:11px;
+}
+
+.primary{
+    width:100%;
+    background:#00d27d;
+    color:#00150d;
+}
+
+.primary:hover{
+    background:#00ff9c;
+}
+
+.stop{
+    width:100%;
+    background:#401313;
+    color:#ff9d9d;
+    border:1px solid #713030;
+    display:none;
+}
+
+.secondary{
+    background:#0b2920;
+    color:#9cebd3;
+    border:1px solid #1d5948;
+}
+
+/* STATUS */
+
+.status{
+    background:#04110d;
+    border:1px solid #164638;
+    border-radius:6px;
+    padding:9px;
+    margin-top:10px;
+    color:#79b7a5;
+    font-size:11px;
+    line-height:1.4;
+}
+
+.status.good{
+    color:#00ff9c;
+}
+
+.status.error{
+    color:#ff8989;
+}
+
+/* MAP */
+
+.map-panel{
+    background:#061713;
+    border:1px solid #164638;
+    border-radius:9px;
+    overflow:hidden;
+}
+
+.map-head{
+    height:44px;
+    padding:0 12px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    border-bottom:1px solid #164638;
+}
+
+.map-head strong{
+    color:#00ff9c;
+    font-size:13px;
+}
+
+.map-head span{
+    color:#527d70;
+    font-size:10px;
+}
+
+#map{
+    height:560px;
+    width:100%;
+}
+
+.leaflet-container{
+    background:#07100d;
+}
+
+/* DATA */
+
+.data-grid{
+    margin-top:13px;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:9px;
+}
+
+.data-card{
+    background:#061713;
+    border:1px solid #164638;
+    border-radius:7px;
+    padding:11px;
+}
+
+.data-card small{
+    display:block;
+    color:#527d70;
+    font-size:9px;
+    margin-bottom:5px;
+}
+
+.data-card strong{
+    color:#d9fff3;
+    font-size:13px;
+    word-break:break-word;
+}
+
+/* GPS TRACK */
+
+.coordinates{
+    margin-top:13px;
+    background:#061713;
+    border:1px solid #164638;
+    border-radius:8px;
+    padding:13px;
+}
+
+.coordinates h2{
+    color:#00ff9c;
+    font-size:14px;
+    margin-bottom:10px;
+}
+
+.coordinate-row{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:9px;
+}
+
+.coordinate-box{
+    background:#04110d;
+    border:1px solid #164638;
+    padding:10px;
+    border-radius:6px;
+}
+
+.coordinate-box small{
+    color:#527d70;
+    display:block;
+    font-size:9px;
+    margin-bottom:5px;
+}
+
+.coordinate-box strong{
+    font-size:14px;
+}
+
+/* TOOLS */
+
+.tools{
+    display:flex;
+    gap:7px;
+    margin-top:10px;
+    flex-wrap:wrap;
+}
+
+/* EXPLANATION */
+
+.lesson{
+    margin-top:13px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+}
+
+.lesson-card{
+    background:#061713;
+    border:1px solid #164638;
+    border-radius:8px;
+    padding:13px;
+}
+
+.lesson-card h3{
+    color:#00ff9c;
+    font-size:13px;
+    margin-bottom:7px;
+}
+
+.lesson-card p{
+    color:#77998d;
+    font-size:11px;
+    line-height:1.55;
+}
+
+/* MOBILE */
+
+@media(max-width:850px){
+
+    header{
+        padding:0 8px;
+    }
+
+    .logo{
+        font-size:17px;
+    }
+
+    nav a{
+        font-size:9px;
+        padding:5px;
+    }
+
+    main{
+        width:97%;
+    }
+
+    .grid{
+        grid-template-columns:1fr;
+    }
+
+    #map{
+        height:400px;
+    }
+
+    .data-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .coordinate-row{
+        grid-template-columns:1fr;
+    }
+
+    .lesson{
+        grid-template-columns:1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<div class="logo">⚡ CYBERLAB</div>
+
+<nav>
+<a href="index.html">HOME</a>
+<a href="learn.html">LEARN</a>
+<a href="lab.html" class="active">LAB</a>
+<a href="explore.html">EXPLORE</a>
+<a href="rules.html">SAFETY</a>
+</nav>
+
+</header>
+
+
+<main>
+
+<div class="hero">
+
+<h1>🧪 Practical Security Lab</h1>
+
+<p>
+Learn how browsers, networks and geographic services handle location information.
+</p>
+
+</div>
+
+
+<div class="notice">
+
+⚠️ <b>AUTHORIZED PRACTICAL USE ONLY</b><br>
+
+This laboratory uses the location of the device on which you grant browser
+permission. A remote device cannot be given exact GPS tracking through an IP
+address alone.
+
+</div>
+
+
+<div class="grid">
+
+<!-- CONTROL PANEL -->
+
+<section class="controls">
+
+<div class="section-title">
+📍 DEVICE LOCATION
+</div>
+
+
+<div class="control-card">
+
+<h3>Get your device location</h3>
+
+<p>
+The browser will ask for permission before accessing this device's GPS/location
+information.
+</p>
+
+<button
+class="primary"
+id="startBtn"
+onclick="startGPS()">
+
+📍 GET MY LOCATION
+
+</button>
+
+<button
+class="stop"
+id="stopBtn"
+onclick="stopGPS()">
+
+⛔ STOP LOCATION
+
+</button>
+
+<div
+class="status"
+id="gpsStatus">
+
+Waiting for permission.
+
+</div>
+
+</div>
+
+
+<div class="control-card">
+
+<h3>📡 Network information</h3>
+
+<p>
+View the public network address currently visible to this browser.
+</p>
+
+<button
+class="secondary"
+onclick="getNetworkInfo()">
+
+CHECK NETWORK
+
+</button>
+
+</div>
+
+
+<div class="control-card">
+
+<h3>🗺 Map controls</h3>
+
+<p>
+Use the map to inspect the location returned by the device.
+</p>
+
+<div class="tools">
+
+<button
+class="secondary"
+onclick="centerLocation()">
+
+CENTER
+
+</button>
+
+<button
+class="secondary"
+onclick="copyCoordinates()">
+
+COPY COORDS
+
+</button>
+
+</div>
+
+</div>
+
+
+<div class="status" id="networkStatus">
+Network information not requested.
+</div>
+
+</section>
+
+
+<!-- MAP -->
+
+<section class="map-panel">
+
+<div class="map-head">
+
+<strong>🗺 LIVE DEVICE MAP</strong>
+
+<span>OPENSTREETMAP</span>
+
+</div>
+
+<div id="map"></div>
+
+</section>
+
+</div>
+
+
+<!-- DATA -->
+
+<div class="data-grid">
+
+<div class="data-card">
+<small>LOCATION STATUS</small>
+<strong id="locationStatus">WAITING</strong>
+</div>
+
+<div class="data-card">
+<small>ACCURACY</small>
+<strong id="accuracy">—</strong>
+</div>
+
+<div class="data-card">
+<small>ALTITUDE</small>
+<strong id="altitude">—</strong>
+</div>
+
+<div class="data-card">
+<small>SPEED</small>
+<strong id="speed">—</strong>
+</div>
+
+<div class="data-card">
+<small>HEADING</small>
+<strong id="heading">—</strong>
+</div>
+
+<div class="data-card">
+<small>NETWORK IP</small>
+<strong id="networkIP">—</strong>
+</div>
+
+<div class="data-card">
+<small>NETWORK CITY</small>
+<strong id="networkCity">—</strong>
+</div>
+
+<div class="data-card">
+<small>NETWORK COUNTRY</small>
+<strong id="networkCountry">—</strong>
+</div>
+
+</div>
+
+
+<!-- COORDINATES -->
+
+<section class="coordinates">
+
+<h2>📍 Device Coordinates</h2>
+
+<div class="coordinate-row">
+
+<div class="coordinate-box">
+
+<small>LATITUDE</small>
+
+<strong id="latitude">
+—
+</strong>
+
+</div>
+
+
+<div class="coordinate-box">
+
+<small>LONGITUDE</small>
+
+<strong id="longitude">
+—
+</strong>
+
+</div>
+
+
+<div class="coordinate-box">
+
+<small>LAST UPDATE</small>
+
+<strong id="lastUpdate">
+—
+</strong>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- LESSON -->
+
+<section class="lesson">
+
+<div class="lesson-card">
+
+<h3>📍 Device GPS</h3>
+
+<p>
+When you press <b>GET MY LOCATION</b>, your browser asks for location
+permission. If you allow it, the browser can provide coordinates from the
+device's available location systems.
+</p>
+
+</div>
+
+
+<div class="lesson-card">
+
+<h3>🌐 IP Geolocation</h3>
+
+<p>
+An IP address can provide approximate network geography such as country,
+region or city. It should not be treated as an exact physical GPS position.
+</p>
+
+</div>
+
+</section>
+
+</main>
+
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+
+<script>
+
+/* =====================================================
+   MAP
+===================================================== */
+
+let map;
+
+let locationMarker = null;
+
+let accuracyCircle = null;
+
+let watchID = null;
+
+let currentLatitude = null;
+
+let currentLongitude = null;
+
+
+function initMap(){
+
+    map =
+        L.map("map")
+        .setView(
+            [9.0820,8.6753],
+            5
+        );
+
+
+    L.tileLayer(
+        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+        {
+            maxZoom:19,
+
+            attribution:
+            "© OpenStreetMap contributors"
+        }
+    ).addTo(map);
+
+}
+
+
+/* =====================================================
+   START GPS
+===================================================== */
+
+function startGPS(){
+
+    if(!navigator.geolocation){
+
+        setGPSStatus(
+            "This browser does not support device geolocation.",
+            true
+        );
+
+        return;
+    }
+
+
+    setGPSStatus(
+        "Requesting device location permission..."
+    );
+
+
+    document.getElementById(
+        "startBtn"
+    ).style.display =
+        "none";
+
+
+    document.getElementById(
+        "stopBtn"
+    ).style.display =
+        "block";
+
+
+    watchID =
+        navigator.geolocation.watchPosition(
+
+            positionSuccess,
+
+            positionError,
+
+            {
+                enableHighAccuracy:true,
+
+                maximumAge:5000,
+
+                timeout:15000
+            }
+
+        );
+
+}
+
+
+/* =====================================================
+   GPS RESULT
+===================================================== */
+
+function positionSuccess(position){
+
+    const coords =
+        position.coords;
+
+
+    currentLatitude =
+        coords.latitude;
+
+
+    currentLongitude =
+        coords.longitude;
+
+
+    document.getElementById(
+        "latitude"
+    ).textContent =
+        currentLatitude.toFixed(6)
+        + "°";
+
+
+    document.getElementById(
+        "longitude"
+    ).textContent =
+        currentLongitude.toFixed(6)
+        + "°";
+
+
+    document.getElementById(
+        "accuracy"
+    ).textContent =
+        Number.isFinite(coords.accuracy)
+        ?
+        Math.round(coords.accuracy)
+        + " m"
+        :
+        "—";
+
+
+    document.getElementById(
+        "altitude"
+    ).textContent =
+        coords.altitude !== null
+        ?
+        Math.round(coords.altitude)
+        + " m"
+        :
+        "—";
+
+
+    document.getElementById(
+        "speed"
+    ).textContent =
+        coords.speed !== null
+        ?
+        coords.speed.toFixed(2)
+        + " m/s"
+        :
+        "—";
+
+
+    document.getElementById(
+        "heading"
+    ).textContent =
+        coords.heading !== null
+        ?
+        Math.round(coords.heading)
+        + "°"
+        :
+        "—";
+
+
+    document.getElementById(
+        "lastUpdate"
+    ).textContent =
+        new Date()
+        .toLocaleTimeString();
+
+
+    document.getElementById(
+        "locationStatus"
+    ).textContent =
+        "ACTIVE";
+
+
+    document.getElementById(
+        "locationStatus"
+    ).style.color =
+        "#00ff9c";
+
+
+    setGPSStatus(
+        "Location permission granted. Device position received."
+    );
+
+
+    /* MAP */
+
+    const positionLatLng =
+        [
+            currentLatitude,
+            currentLongitude
+        ];
+
+
+    map.setView(
+        positionLatLng,
+        17
+    );
+
+
+    if(locationMarker){
+
+        locationMarker.setLatLng(
+            positionLatLng
+        );
+
+    }else{
+
+        locationMarker =
+            L.marker(
+                positionLatLng
+            ).addTo(map);
+
+    }
+
+
+    locationMarker.bindPopup(
+        "<b>Your authorized device location</b><br>"
+        +
+        currentLatitude.toFixed(6)
+        +
+        "°, "
+        +
+        currentLongitude.toFixed(6)
+        +
+        "°"
+    ).openPopup();
+
+
+    /* ACCURACY */
+
+    if(accuracyCircle){
+
+        accuracyCircle.setLatLng(
+            positionLatLng
+        );
+
+        accuracyCircle.setRadius(
+            coords.accuracy || 0
+        );
+
+    }else{
+
+        accuracyCircle =
+            L.circle(
+                positionLatLng,
+                {
+                    radius:
+                        coords.accuracy || 0,
+
+                    color:"#00ff9c",
+
+                    fillOpacity:0.08
+                }
+            ).addTo(map);
+
+    }
+
+}
+
+
+/* =====================================================
+   GPS ERROR
+===================================================== */
+
+function positionError(error){
+
+    let message =
+        "Unable to obtain location.";
+
+
+    if(error.code === 1){
+
+        message =
+            "Location permission was denied.";
+
+    }
+
+    else if(error.code === 2){
+
+        message =
+            "Device location is unavailable.";
+
+    }
+
+    else if(error.code === 3){
+
+        message =
+            "Location request timed out.";
+
+    }
+
+
+    setGPSStatus(
+        message,
+        true
+    );
+
+
+    stopGPS();
+
+}
+
+
+/* =====================================================
+   STOP GPS
+===================================================== */
+
+function stopGPS(){
+
+    if(
+        watchID !== null
+    ){
+
+        navigator.geolocation.clearWatch(
+            watchID
+        );
+
+        watchID = null;
+
+    }
+
+
+    document.getElementById(
+        "startBtn"
+    ).style.display =
+        "block";
+
+
+    document.getElementById(
+        "stopBtn"
+    ).style.display =
+        "none";
+
+
+    document.getElementById(
+        "locationStatus"
+    ).textContent =
+        "STOPPED";
+
+
+    document.getElementById(
+        "locationStatus"
+    ).style.color =
+        "#d9fff3";
+
+
+    setGPSStatus(
+        "Device location monitoring stopped."
+    );
+
+}
+
+
+/* =====================================================
+   STATUS
+===================================================== */
+
+function setGPSStatus(
+    message,
+    error=false
+){
+
+    const element =
+        document.getElementById(
+            "gpsStatus"
+        );
+
+
+    element.textContent =
+        message;
+
+
+    element.className =
+        error
+        ?
+        "status error"
+        :
+        "status good";
+
+}
+
+
+/* =====================================================
+   CENTER
+===================================================== */
+
+function centerLocation(){
+
+    if(
+        currentLatitude === null ||
+        currentLongitude === null
+    ){
+
+        setGPSStatus(
+            "Get your device location first.",
+            true
+        );
+
+        return;
+    }
+
+
+    map.setView(
+        [
+            currentLatitude,
+            currentLongitude
+        ],
+        17
+    );
+
+}
+
+
+/* =====================================================
+   COPY COORDINATES
+===================================================== */
+
+async function copyCoordinates(){
+
+    if(
+        currentLatitude === null ||
+        currentLongitude === null
+    ){
+
+        setGPSStatus(
+            "No coordinates available yet.",
+            true
+        );
+
+        return;
+    }
+
+
+    const text =
+        currentLatitude.toFixed(6)
+        +
+        ", "
+        +
+        currentLongitude.toFixed(6);
+
+
+    try{
+
+        await navigator.clipboard.writeText(
+            text
+        );
+
+        setGPSStatus(
+            "Coordinates copied to clipboard."
+        );
+
+    }catch(error){
+
+        setGPSStatus(
+            "Copy failed. Coordinates: " + text,
+            true
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   NETWORK INFORMATION
+===================================================== */
+
+async function getNetworkInfo(){
+
+    const status =
+        document.getElementById(
+            "networkStatus"
+        );
+
+
+    status.textContent =
+        "Requesting public network information...";
+
+
+    try{
+
+        const response =
+            await fetch(
+                "https://ipapi.co/json/"
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if(data.error){
+
+            throw new Error(
+                data.reason ||
+                "Network lookup failed."
+            );
+
+        }
+
+
+        document.getElementById(
+            "networkIP"
+        ).textContent =
+            data.ip || "—";
+
+
+        document.getElementById(
+            "networkCity"
+        ).textContent =
+            data.city || "—";
+
+
+        document.getElementById(
+            "networkCountry"
+        ).textContent =
+            data.country_name || "—";
+
+
+        status.textContent =
+            "Public network information loaded.";
+
+        status.className =
+            "status good";
+
+
+    }catch(error){
+
+        status.textContent =
+            "Network lookup failed: "
+            +
+            error.message;
+
+        status.className =
+            "status error";
+
+    }
+
+}
+
+
+/* =====================================================
+   START
+===================================================== */
+
+window.addEventListener(
+    "load",
+    function(){
+
+        initMap();
+
+    }
+);
+
+</script>
+
+</body>
+</html>

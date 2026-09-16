@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CyberLab | Cybersecurity Learning</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#061411;
+    color:#e8fff7;
+    min-height:100vh;
+}
+
+header{
+    height:64px;
+    background:#09231d;
+    border-bottom:1px solid #164c3d;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 22px;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.logo{
+    font-size:22px;
+    font-weight:bold;
+    color:#39ff9a;
+    letter-spacing:.5px;
+}
+
+.logo span{
+    color:#d7fff0;
+}
+
+nav{
+    display:flex;
+    gap:8px;
+}
+
+nav a{
+    text-decoration:none;
+    color:#a9cfc2;
+    padding:9px 12px;
+    border-radius:7px;
+    font-size:13px;
+}
+
+nav a:hover,
+nav a.active{
+    background:#123d31;
+    color:#39ff9a;
+}
+
+main{
+    max-width:1400px;
+    margin:auto;
+    padding:24px;
+}
+
+.hero{
+    background:linear-gradient(135deg,#0b2c23,#071914);
+    border:1px solid #175442;
+    border-radius:16px;
+    padding:28px;
+    margin-bottom:20px;
+}
+
+.badge{
+    display:inline-block;
+    background:#103a2e;
+    color:#39ff9a;
+    border:1px solid #21684f;
+    padding:7px 11px;
+    border-radius:20px;
+    font-size:12px;
+    margin-bottom:14px;
+}
+
+h1{
+    font-size:36px;
+    margin-bottom:10px;
+}
+
+.hero p{
+    color:#9fc5b7;
+    max-width:760px;
+    line-height:1.6;
+}
+
+.analyzer{
+    margin-top:22px;
+    display:flex;
+    gap:10px;
+    max-width:900px;
+}
+
+.analyzer input{
+    flex:1;
+    min-width:0;
+    padding:15px;
+    background:#04100d;
+    border:1px solid #25634f;
+    border-radius:9px;
+    color:white;
+    outline:none;
+    font-size:15px;
+}
+
+.analyzer input:focus{
+    border-color:#39ff9a;
+}
+
+.analyzer button{
+    padding:0 24px;
+    border:0;
+    border-radius:9px;
+    background:#39ff9a;
+    color:#04100d;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.analyzer button:hover{
+    background:#72ffba;
+}
+
+.section-title{
+    font-size:20px;
+    margin:22px 0 12px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+}
+
+.card{
+    background:#092019;
+    border:1px solid #164c3d;
+    border-radius:12px;
+    padding:18px;
+}
+
+.card .icon{
+    font-size:25px;
+    margin-bottom:10px;
+}
+
+.card h3{
+    font-size:15px;
+    margin-bottom:7px;
+}
+
+.card p{
+    color:#8fb7a9;
+    font-size:13px;
+    line-height:1.5;
+}
+
+.workspace{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+}
+
+.panel{
+    background:#071b15;
+    border:1px solid #164c3d;
+    border-radius:14px;
+    overflow:hidden;
+}
+
+.panel-head{
+    padding:14px 16px;
+    background:#0a251e;
+    border-bottom:1px solid #164c3d;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.panel-head h2{
+    font-size:15px;
+}
+
+.status{
+    font-size:11px;
+    color:#39ff9a;
+}
+
+.panel-body{
+    padding:18px;
+}
+
+.earth{
+    height:360px;
+    border-radius:10px;
+    background:
+        radial-gradient(circle at 50% 50%,#15523d 0,#09281f 28%,#03100d 68%);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+    overflow:hidden;
+}
+
+.globe{
+    width:250px;
+    height:250px;
+    border-radius:50%;
+    border:2px solid #39ff9a;
+    box-shadow:
+        0 0 25px #1c9b69,
+        inset -25px -15px 45px #020806,
+        inset 15px 10px 30px #16734f;
+    position:relative;
+}
+
+.globe:before,
+.globe:after{
+    content:"";
+    position:absolute;
+    border:1px solid #39ff9a;
+    border-radius:50%;
+    opacity:.45;
+}
+
+.globe:before{
+    width:100%;
+    height:45%;
+    top:27%;
+    left:0;
+}
+
+.globe:after{
+    width:45%;
+    height:100%;
+    top:0;
+    left:27%;
+}
+
+.lat,
+.lon{
+    position:absolute;
+    opacity:.3;
+    pointer-events:none;
+}
+
+.lat{
+    width:100%;
+    border-top:1px solid #39ff9a;
+    left:0;
+}
+
+.lat.one{top:25%}
+.lat.two{top:50%}
+.lat.three{top:75%}
+
+.lon{
+    height:100%;
+    border-left:1px solid #39ff9a;
+    top:0;
+}
+
+.lon.one{left:25%}
+.lon.two{left:50%}
+.lon.three{left:75%}
+
+.globe-label{
+    position:absolute;
+    bottom:14px;
+    left:14px;
+    background:#061411dd;
+    border:1px solid #245b49;
+    padding:8px 10px;
+    border-radius:7px;
+    font-size:11px;
+    color:#a8d9c6;
+}
+
+.map{
+    height:360px;
+    background:#07120f;
+    position:relative;
+    overflow:hidden;
+    border-radius:10px;
+}
+
+.map-grid{
+    position:absolute;
+    inset:0;
+    background:
+        linear-gradient(90deg,#15352d 1px,transparent 1px),
+        linear-gradient(#15352d 1px,transparent 1px);
+    background-size:40px 40px;
+    opacity:.55;
+}
+
+.map-line{
+    position:absolute;
+    height:2px;
+    background:#39ff9a;
+    opacity:.6;
+    transform-origin:left center;
+}
+
+.line1{
+    width:70%;
+    top:38%;
+    left:10%;
+    transform:rotate(18deg);
+}
+
+.line2{
+    width:55%;
+    top:62%;
+    left:25%;
+    transform:rotate(-22deg);
+}
+
+.line3{
+    width:45%;
+    top:48%;
+    left:42%;
+    transform:rotate(55deg);
+}
+
+.location-dot{
+    position:absolute;
+    width:15px;
+    height:15px;
+    background:#39ff9a;
+    border:3px solid #062018;
+    border-radius:50%;
+    left:55%;
+    top:48%;
+    box-shadow:0 0 0 8px #39ff9a22,0 0 22px #39ff9a;
+}
+
+.map-label{
+    position:absolute;
+    left:16px;
+    bottom:14px;
+    background:#061411ee;
+    border:1px solid #245b49;
+    border-radius:7px;
+    padding:9px 11px;
+    font-size:11px;
+    color:#b9dace;
+}
+
+.features{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+}
+
+.feature{
+    padding:18px;
+    background:#092019;
+    border:1px solid #164c3d;
+    border-radius:12px;
+}
+
+.feature strong{
+    display:block;
+    color:#39ff9a;
+    margin-bottom:8px;
+}
+
+.feature span{
+    color:#8fb7a9;
+    font-size:13px;
+    line-height:1.5;
+}
+
+.notice{
+    margin-top:18px;
+    padding:14px;
+    background:#10251f;
+    border-left:4px solid #39ff9a;
+    color:#a9cfc2;
+    font-size:12px;
+    line-height:1.6;
+    border-radius:7px;
+}
+
+footer{
+    text-align:center;
+    color:#608477;
+    padding:25px;
+    font-size:12px;
+}
+
+@media(max-width:900px){
+    .grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .workspace{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .features{
+        grid-template-columns:1fr;
+    }
+
+    h1{
+        font-size:29px;
+    }
+
+    nav a{
+        padding:7px 6px;
+        font-size:11px;
+    }
+}
+
+@media(max-width:600px){
+    header{
+        padding:0 10px;
+    }
+
+    .logo{
+        font-size:18px;
+    }
+
+    nav{
+        gap:2px;
+    }
+
+    nav a{
+        font-size:10px;
+        padding:6px 5px;
+    }
+
+    main{
+        padding:12px;
+    }
+
+    .hero{
+        padding:20px;
+    }
+
+    .analyzer{
+        flex-direction:column;
+    }
+
+    .analyzer button{
+        padding:14px;
+    }
+
+    .grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .workspace{
+        grid-template-columns:1fr 1fr;
+        gap:8px;
+    }
+
+    .panel-body{
+        padding:8px;
+    }
+
+    .earth,
+    .map{
+        height:250px;
+    }
+
+    .globe{
+        width:170px;
+        height:170px;
+    }
+
+    .panel-head{
+        padding:10px;
+    }
+
+    .panel-head h2{
+        font-size:12px;
+    }
+
+    .status{
+        font-size:9px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">🛡️ Cyber<span>Lab</span></div>
+
+    <nav>
+        <a href="index.html" class="active">HOME</a>
+        <a href="learn.html">LEARN</a>
+        <a href="lab.html">LAB</a>
+        <a href="explore.html">EXPLORE</a>
+        <a href="rules.html">SAFETY</a>
+    </nav>
+</header>
+
+<main>
+
+<section class="hero">
+
+    <div class="badge">● CYBERSECURITY LEARNING PLATFORM</div>
+
+    <h1>Welcome to CyberLab</h1>
+
+    <p>
+        Learn how network information, IP addresses, geographic data,
+        device permissions and cybersecurity tools work through safe,
+        authorized practical exercises.
+    </p>
+
+    <div class="analyzer">
+
+        <input
+            id="targetInput"
+            type="text"
+            placeholder="Enter an IP address or domain..."
+            autocomplete="off"
+        >
+
+        <button onclick="analyzeTarget()">ANALYZE</button>
+
+    </div>
+
+</section>
+
+
+<h2 class="section-title">CyberLab Intelligence</h2>
+
+<section class="grid">
+
+    <div class="card">
+        <div class="icon">🌐</div>
+        <h3>IP & Network</h3>
+        <p>
+            Learn public IP addresses, network providers,
+            ASN information and basic network concepts.
+        </p>
+    </div>
+
+    <div class="card">
+        <div class="icon">📍</div>
+        <h3>Location Intelligence</h3>
+        <p>
+            Understand the difference between approximate
+            IP geolocation and authorized device GPS.
+        </p>
+    </div>
+
+    <div class="card">
+        <div class="icon">🌍</div>
+        <h3>Global Explorer</h3>
+        <p>
+            Explore countries, cities, coordinates and
+            geographic information on an interactive map.
+        </p>
+    </div>
+
+    <div class="card">
+        <div class="icon">🔐</div>
+        <h3>Security Learning</h3>
+        <p>
+            Study cybersecurity concepts while keeping
+            practical activities authorized and responsible.
+        </p>
+    </div>
+
+</section>
+
+
+<h2 class="section-title">Global CyberLab View</h2>
+
+<section class="workspace">
+
+    <div class="panel">
+
+        <div class="panel-head">
+            <h2>🌎 3D EARTH</h2>
+            <span class="status">● ONLINE</span>
+        </div>
+
+        <div class="panel-body">
+
+            <div class="earth">
+
+                <div class="globe">
+
+                    <div class="lat one"></div>
+                    <div class="lat two"></div>
+                    <div class="lat three"></div>
+
+                    <div class="lon one"></div>
+                    <div class="lon two"></div>
+                    <div class="lon three"></div>
+
+                </div>
+
+                <div class="globe-label">
+                    LAT/LON GRID • GLOBAL VIEW
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="panel">
+
+        <div class="panel-head">
+            <h2>🗺️ REAL-WORLD MAP</h2>
+            <span class="status">MAP READY</span>
+        </div>
+
+        <div class="panel-body">
+
+            <div class="map">
+
+                <div class="map-grid"></div>
+
+                <div class="map-line line1"></div>
+                <div class="map-line line2"></div>
+                <div class="map-line line3"></div>
+
+                <div class="location-dot"></div>
+
+                <div class="map-label">
+                    GLOBAL LOCATION VIEW
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<h2 class="section-title">What You Can Learn</h2>
+
+<section class="features">
+
+    <div class="feature">
+        <strong>01 — Network Intelligence</strong>
+        <span>
+            Analyze publicly available network information
+            about an IP address or domain.
+        </span>
+    </div>
+
+    <div class="feature">
+        <strong>02 — Geographic Intelligence</strong>
+        <span>
+            Understand coordinates, countries, regions,
+            cities and geographic boundaries.
+        </span>
+    </div>
+
+    <div class="feature">
+        <strong>03 — Device Location</strong>
+        <span>
+            Learn how browser GPS permission can provide
+            precise coordinates for the device granting permission.
+        </span>
+    </div>
+
+</section>
+
+
+<div class="notice">
+    ⚠️ <strong>AUTHORIZED PRACTICAL USE ONLY</strong><br>
+    IP geolocation is approximate and cannot guarantee the exact
+    physical position of a remote device. Precise device GPS
+    requires permission from the device owner through an
+    authorized location request.
+</div>
+
+</main>
+
+
+<footer>
+    CyberLab • Learn cybersecurity responsibly • Use only systems and
+    devices you are authorized to examine.
+</footer>
+
+
+<script>
+
+function analyzeTarget(){
+
+    const input =
+        document.getElementById("targetInput").value.trim();
+
+    if(!input){
+        alert("Enter an IP address or domain first.");
+        return;
+    }
+
+    /*
+      Send the target to the dedicated Network Intelligence page.
+      encodeURIComponent keeps domains/IP data safe inside the URL.
+    */
+
+    window.location.href =
+        "analyzer.html?target=" +
+        encodeURIComponent(input);
+}
+
+
+document
+    .getElementById("targetInput")
+    .addEventListener("keydown", function(event){
+
+        if(event.key === "Enter"){
+            analyzeTarget();
+        }
+
+    });
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>CyberLab | Global Explorer</title>
+
+<link rel="stylesheet"
+href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
+<style>
+*{
+ box-sizing:border-box;
+ margin:0;
+ padding:0;
+}
+
+body{
+ background:#04110d;
+ color:#eafff6;
+ font-family:Arial,Helvetica,sans-serif;
+ min-height:100vh;
+}
+
+header{
+ height:64px;
+ background:#09251e;
+ border-bottom:1px solid #1b5745;
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ padding:0 20px;
+ position:sticky;
+ top:0;
+ z-index:1000;
+}
+
+.logo{
+ color:#39ff9a;
+ font-size:21px;
+ font-weight:bold;
+}
+
+.logo span{
+ color:#eafff6;
+}
+
+nav{
+ display:flex;
+ gap:4px;
+}
+
+nav a{
+ text-decoration:none;
+ color:#91b9aa;
+ font-size:12px;
+ padding:9px 10px;
+ border-radius:7px;
+}
+
+nav a:hover,
+nav a.active{
+ background:#123d31;
+ color:#39ff9a;
+}
+
+main{
+ max-width:1500px;
+ margin:auto;
+ padding:18px;
+}
+
+.title{
+ margin-bottom:15px;
+}
+
+.title h1{
+ font-size:28px;
+ margin-bottom:7px;
+}
+
+.title p{
+ color:#91b9aa;
+ font-size:13px;
+ line-height:1.5;
+}
+
+.search{
+ display:flex;
+ gap:8px;
+ margin-bottom:12px;
+}
+
+.search input{
+ flex:1;
+ padding:14px;
+ border-radius:8px;
+ border:1px solid #28654f;
+ background:#020b08;
+ color:#fff;
+ outline:none;
+ font-size:14px;
+}
+
+.search input:focus{
+ border-color:#39ff9a;
+}
+
+.search button{
+ border:0;
+ border-radius:8px;
+ padding:0 22px;
+ background:#39ff9a;
+ color:#03100b;
+ font-weight:bold;
+ cursor:pointer;
+}
+
+.search button:hover{
+ background:#75ffbc;
+}
+
+.status{
+ padding:11px 13px;
+ border:1px solid #164c3d;
+ background:#092019;
+ border-radius:8px;
+ color:#9ec8b7;
+ font-size:12px;
+ margin-bottom:13px;
+}
+
+.status strong{
+ color:#39ff9a;
+}
+
+.viewer{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:12px;
+}
+
+.panel{
+ background:#071a14;
+ border:1px solid #164c3d;
+ border-radius:12px;
+ overflow:hidden;
+ min-width:0;
+}
+
+.panel-head{
+ height:48px;
+ background:#0a261f;
+ border-bottom:1px solid #164c3d;
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ padding:0 14px;
+}
+
+.panel-head h2{
+ font-size:14px;
+}
+
+.panel-head span{
+ color:#39ff9a;
+ font-size:10px;
+}
+
+#earth{
+ display:block;
+ width:100%;
+ height:480px;
+ background:#010806;
+}
+
+#map{
+ width:100%;
+ height:480px;
+ background:#06110d;
+}
+
+.earth-info{
+ position:absolute;
+ left:14px;
+ bottom:14px;
+ background:#03100ddd;
+ border:1px solid #24624d;
+ border-radius:7px;
+ padding:9px 11px;
+ font-size:11px;
+ color:#a8d1c1;
+}
+
+.earth-wrap{
+ position:relative;
+}
+
+.info{
+ display:grid;
+ grid-template-columns:repeat(4,1fr);
+ gap:9px;
+ margin-top:12px;
+}
+
+.info-card{
+ background:#092019;
+ border:1px solid #164c3d;
+ border-radius:8px;
+ padding:13px;
+}
+
+.info-card small{
+ display:block;
+ color:#628a7b;
+ font-size:9px;
+ text-transform:uppercase;
+ margin-bottom:6px;
+}
+
+.info-card strong{
+ display:block;
+ font-size:13px;
+ overflow-wrap:anywhere;
+}
+
+.controls{
+ display:flex;
+ flex-wrap:wrap;
+ gap:8px;
+ margin-top:11px;
+}
+
+.controls button{
+ padding:9px 12px;
+ background:#0b2a21;
+ color:#a8d1c1;
+ border:1px solid #205a47;
+ border-radius:7px;
+ cursor:pointer;
+ font-size:11px;
+}
+
+.controls button:hover{
+ color:#39ff9a;
+ border-color:#39ff9a;
+}
+
+.notice{
+ margin-top:14px;
+ padding:13px;
+ border-left:4px solid #39ff9a;
+ background:#0c241c;
+ color:#a7cbbd;
+ font-size:12px;
+ line-height:1.6;
+ border-radius:7px;
+}
+
+@media(max-width:700px){
+
+ header{
+  padding:0 8px;
+ }
+
+ .logo{
+  font-size:17px;
+ }
+
+ nav{
+  gap:1px;
+ }
+
+ nav a{
+  font-size:9px;
+  padding:6px 4px;
+ }
+
+ main{
+  padding:9px;
+ }
+
+ .title h1{
+  font-size:23px;
+ }
+
+ .viewer{
+  grid-template-columns:1fr 1fr;
+  gap:7px;
+ }
+
+ #earth,
+ #map{
+  height:340px;
+ }
+
+ .panel-head{
+  padding:0 8px;
+ }
+
+ .panel-head h2{
+  font-size:10px;
+ }
+
+ .panel-head span{
+  font-size:8px;
+ }
+
+ .info{
+  grid-template-columns:1fr 1fr;
+ }
+
+ .search button{
+  padding:0 12px;
+ }
+
+}
+
+@media(max-width:430px){
+
+ .search{
+  flex-direction:column;
+ }
+
+ .search button{
+  height:42px;
+ }
+
+ #earth,
+ #map{
+  height:300px;
+ }
+
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+ <div class="logo">
+  🛡️ Cyber<span>Lab</span>
+ </div>
+
+ <nav>
+  <a href="index.html">HOME</a>
+  <a href="learn.html">LEARN</a>
+  <a href="lab.html">LAB</a>
+  <a href="explore.html" class="active">EXPLORE</a>
+  <a href="rules.html">SAFETY</a>
+ </nav>
+
+</header>
+
+
+<main>
+
+<div class="title">
+
+ <h1>🌍 Global Location Explorer</h1>
+
+ <p>
+  Explore real geographic locations with a photographic 3D Earth,
+  interactive map and geographic coordinates.
+ </p>
+
+</div>
+
+
+<div class="search">
+
+ <input
+  id="locationInput"
+  placeholder="Search city, country or place..."
+  autocomplete="off"
+ >
+
+ <button onclick="searchLocation()">
+  SEARCH
+ </button>
+
+</div>
+
+
+<div class="status" id="status">
+ <strong>READY</strong> — Search for a location.
+</div>
+
+
+<section class="viewer">
+
+
+<!-- ================= EARTH ================= -->
+
+<div class="panel">
+
+ <div class="panel-head">
+
+  <h2>🌎 REAL 3D EARTH</h2>
+
+  <span id="earthStatus">
+   LOADING
+  </span>
+
+ </div>
+
+
+ <div class="earth-wrap">
+
+  <canvas id="earth"></canvas>
+
+  <div class="earth-info">
+   🖱️ Drag = rotate &nbsp; • &nbsp;
+   Wheel = zoom
+  </div>
+
+ </div>
+
+</div>
+
+
+<!-- ================= MAP ================= -->
+
+<div class="panel">
+
+ <div class="panel-head">
+
+  <h2>🗺️ REAL-WORLD MAP</h2>
+
+  <span>
+   OPENSTREETMAP
+  </span>
+
+ </div>
+
+ <div id="map"></div>
+
+</div>
+
+
+</section>
+
+
+<div class="controls">
+
+ <button onclick="resetEarth()">
+  ↻ RESET EARTH
+ </button>
+
+ <button onclick="centerMap()">
+  📍 CENTER LOCATION
+ </button>
+
+ <button onclick="openMap()">
+  🗺️ OPEN MAP
+ </button>
+
+</div>
+
+
+<section class="info">
+
+ <div class="info-card">
+  <small>Latitude</small>
+  <strong id="lat">—</strong>
+ </div>
+
+ <div class="info-card">
+  <small>Longitude</small>
+  <strong id="lon">—</strong>
+ </div>
+
+ <div class="info-card">
+  <small>Place</small>
+  <strong id="place">—</strong>
+ </div>
+
+ <div class="info-card">
+  <small>Region</small>
+  <strong id="region">—</strong>
+ </div>
+
+ <div class="info-card">
+  <small>Country</small>
+  <strong id="country">—</strong>
+ </div>
+
+ <div class="info-card">
+  <small>Country Code</small>
+  <strong id="code">—</strong>
+ </div>
+
+ <div class="info-card">
+  <small>Coordinates</small>
+  <strong id="coords">—</strong>
+ </div>
+
+ <div class="info-card">
+  <small>Data Source</small>
+  <strong>OpenStreetMap</strong>
+ </div>
+
+</section>
+
+
+<div class="notice">
+
+ <strong>📚 CYBERLAB LOCATION LESSON</strong><br>
+
+ This explorer uses public geographic data. Geographic
+ coordinates identify a location on Earth; they do not by
+ themselves prove that a particular person or device is there.
+
+</div>
+
+</main>
+
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+
+<script>
+
+/* =====================================================
+   GLOBAL VARIABLES
+===================================================== */
+
+let map;
+let marker;
+
+let scene;
+let camera;
+let renderer;
+let earth;
+
+let earthMarker;
+
+let dragging=false;
+
+let previousX=0;
+let previousY=0;
+
+let currentLat=0;
+let currentLon=0;
+
+let zoom=1;
+
+
+/* =====================================================
+   REAL EARTH TEXTURE
+===================================================== */
+
+const EARTH_TEXTURES=[
+
+ "https://threejs.org/examples/textures/planets/earth_atmos_2048.jpg",
+
+ "https://threejs.org/examples/textures/planets/earth_atmos_2048.jpg",
+
+ "https://raw.githubusercontent.com/turban/webgl-earth/master/images/2_no_clouds_4k.jpg"
+
+];
+
+
+/* =====================================================
+   MAP
+===================================================== */
+
+function initMap(){
+
+ map=L.map("map").setView(
+  [0,0],
+  2
+ );
+
+ L.tileLayer(
+  "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+  {
+   maxZoom:19,
+   attribution:"© OpenStreetMap contributors"
+  }
+ ).addTo(map);
+
+}
+
+
+/* =====================================================
+   EARTH
+===================================================== */
+
+function initEarth(){
+
+ const canvas=
+  document.getElementById("earth");
+
+ scene=
+  new THREE.Scene();
+
+
+ camera=
+  new THREE.PerspectiveCamera(
+   40,
+   canvas.clientWidth /
+   canvas.clientHeight,
+   .1,
+   100
+  );
+
+ camera.position.z=3.15;
+
+
+ renderer=
+  new THREE.WebGLRenderer({
+   canvas:canvas,
+   antialias:true,
+   alpha:true
+  });
+
+ renderer.setPixelRatio(
+  Math.min(
+   window.devicePixelRatio,
+   2
+  )
+ );
+
+ renderer.setSize(
+  canvas.clientWidth,
+  canvas.clientHeight,
+  false
+ );
+
+
+ /* LIGHT */
+
+ const ambient=
+  new THREE.AmbientLight(
+   0xffffff,
+   1.4
+  );
+
+ scene.add(ambient);
+
+
+ const light=
+  new THREE.DirectionalLight(
+   0xffffff,
+   2
+  );
+
+ light.position.set(
+  5,
+  3,
+  5
+ );
+
+ scene.add(light);
+
+
+ /* EARTH */
+
+ const geometry=
+  new THREE.SphereGeometry(
+   1,
+   96,
+   96
+  );
+
+
+ const material=
+  new THREE.MeshPhongMaterial({
+   color:0xffffff
+  });
+
+
+ earth=
+  new THREE.Mesh(
+   geometry,
+   material
+  );
+
+ scene.add(earth);
+
+
+ /* LOAD REAL IMAGE */
+
+ loadEarthTexture(0);
+
+
+ /* EVENTS */
+
+ canvas.addEventListener(
+  "pointerdown",
+  startDrag
+ );
+
+ canvas.addEventListener(
+  "pointermove",
+  moveDrag
+ );
+
+ canvas.addEventListener(
+  "pointerup",
+  stopDrag
+ );
+
+ canvas.addEventListener(
+  "pointerleave",
+  stopDrag
+ );
+
+ canvas.addEventListener(
+  "wheel",
+  zoomEarth,
+  {passive:false}
+ );
+
+
+ animate();
+
+}
+
+
+/* =====================================================
+   TEXTURE LOADER
+===================================================== */
+
+function loadEarthTexture(index){
+
+ if(index>=EARTH_TEXTURES.length){
+
+  document.getElementById(
+   "earthStatus"
+  ).textContent="GRID MODE";
+
+  return;
+
+ }
+
+
+ const loader=
+  new THREE.TextureLoader();
+
+ loader.crossOrigin="anonymous";
+
+
+ loader.load(
+
+  EARTH_TEXTURES[index],
+
+  function(texture){
+
+   earth.material.map=texture;
+
+   earth.material.color.set(
+    0xffffff
+   );
+
+   earth.material.needsUpdate=true;
+
+   document.getElementById(
+    "earthStatus"
+   ).textContent="REAL TEXTURE";
+
+  },
+
+  undefined,
+
+  function(){
+
+   loadEarthTexture(index+1);
+
+  }
+
+ );
+
+}
+
+
+/* =====================================================
+   ROTATION
+===================================================== */
+
+function startDrag(e){
+
+ dragging=true;
+
+ previousX=e.clientX;
+ previousY=e.clientY;
+
+}
+
+
+function moveDrag(e){
+
+ if(!dragging)return;
+
+ const dx=
+  e.clientX-previousX;
+
+ const dy=
+  e.clientY-previousY;
+
+
+ earth.rotation.y +=
+  dx*.008;
+
+ earth.rotation.x +=
+  dy*.004;
+
+
+ earth.rotation.x=
+  Math.max(
+   -1.3,
+   Math.min(
+    1.3,
+    earth.rotation.x
+   )
+  );
+
+
+ previousX=e.clientX;
+ previousY=e.clientY;
+
+}
+
+
+function stopDrag(){
+
+ dragging=false;
+
+}
+
+
+/* =====================================================
+   ZOOM
+===================================================== */
+
+function zoomEarth(e){
+
+ e.preventDefault();
+
+ zoom +=
+  e.deltaY < 0
+  ? .12
+  : -.12;
+
+ zoom=
+  Math.max(
+   .65,
+   Math.min(
+    1.7,
+    zoom
+   )
+  );
+
+ camera.position.z=
+  3.15/zoom;
+
+}
+
+
+/* =====================================================
+   EARTH LOCATION MARKER
+===================================================== */
+
+function showEarthMarker(
+ lat,
+ lon
+){
+
+ if(earthMarker){
+
+  earth.remove(
+   earthMarker
+  );
+
+ }
+
+
+ const phi=
+  (90-lat)*
+  Math.PI/180;
+
+ const theta=
+  (lon+180)*
+  Math.PI/180;
+
+ const radius=1.025;
+
+
+ const x=
+  -radius*
+  Math.sin(phi)*
+  Math.cos(theta);
+
+ const y=
+  radius*
+  Math.cos(phi);
+
+ const z=
+  radius*
+  Math.sin(phi)*
+  Math.sin(theta);
+
+
+ const geometry=
+  new THREE.SphereGeometry(
+   .035,
+   20,
+   20
+  );
+
+
+ const material=
+  new THREE.MeshBasicMaterial({
+   color:0xff3333
+  });
+
+
+ earthMarker=
+  new THREE.Mesh(
+   geometry,
+   material
+  );
+
+ earthMarker.position.set(
+  x,
+  y,
+  z
+ );
+
+ earth.add(
+  earthMarker
+ );
+
+}
+
+
+/* =====================================================
+   SEARCH LOCATION
+===================================================== */
+
+async function searchLocation(){
+
+ const input=
+  document
+   .getElementById(
+    "locationInput"
+   )
+   .value
+   .trim();
+
+
+ if(!input){
+
+  setStatus(
+   "ERROR",
+   "Enter a location first."
+  );
+
+  return;
+
+ }
+
+
+ setStatus(
+  "SEARCHING",
+  "Requesting real geographic data..."
+ );
+
+
+ try{
+
+  const url=
+   "https://nominatim.openstreetmap.org/search?"+
+   new URLSearchParams({
+
+    q:input,
+
+    format:"json",
+
+    addressdetails:"1",
+
+    limit:"1"
+
+   });
+
+
+  const response=
+   await fetch(url);
+
+
+  if(!response.ok){
+
+   throw new Error(
+    "Search failed"
+   );
+
+  }
+
+
+  const results=
+   await response.json();
+
+
+  if(!results.length){
+
+   setStatus(
+    "NOT FOUND",
+    "No matching location found."
+   );
+
+   return;
+
+  }
+
+
+  const result=
+   results[0];
+
+
+  currentLat=
+   parseFloat(result.lat);
+
+  currentLon=
+   parseFloat(result.lon);
+
+
+  const address=
+   result.address || {};
+
+
+  document.getElementById(
+   "lat"
+  ).textContent=
+   currentLat.toFixed(6);
+
+
+  document.getElementById(
+   "lon"
+  ).textContent=
+   currentLon.toFixed(6);
+
+
+  document.getElementById(
+   "place"
+  ).textContent=
+   address.city ||
+   address.town ||
+   address.village ||
+   address.municipality ||
+   result.name ||
+   "—";
+
+
+  document.getElementById(
+   "region"
+  ).textContent=
+   address.state ||
+   address.region ||
+   "—";
+
+
+  document.getElementById(
+   "country"
+  ).textContent=
+   address.country ||
+   "—";
+
+
+  document.getElementById(
+   "code"
+  ).textContent=
+   address.country_code
+   ? address.country_code.toUpperCase()
+   : "—";
+
+
+  document.getElementById(
+   "coords"
+  ).textContent=
+   currentLat.toFixed(5)+
+   ", "+
+   currentLon.toFixed(5);
+
+
+  /* MAP MARKER */
+
+  if(marker){
+
+   map.removeLayer(
+    marker
+   );
+
+  }
+
+
+  marker=
+   L.marker([
+    currentLat,
+    currentLon
+   ])
+   .addTo(map)
+   .bindPopup(
+    "<b>"+
+    escapeHTML(
+     result.display_name
+    )+
+    "</b><br>"+
+    currentLat.toFixed(6)+
+    ", "+
+    currentLon.toFixed(6)
+   )
+   .openPopup();
+
+
+  map.setView(
+   [
+    currentLat,
+    currentLon
+   ],
+   10,
+   {
+    animate:true
+   }
+  );
+
+
+  /* EARTH MARKER */
+
+  showEarthMarker(
+   currentLat,
+   currentLon
+  );
+
+
+  setStatus(
+   "LOCATION FOUND",
+   result.display_name
+  );
+
+
+ }catch(error){
+
+  console.error(error);
+
+  setStatus(
+   "ERROR",
+   "The geographic service could not be reached."
+  );
+
+ }
+
+}
+
+
+/* =====================================================
+   STATUS
+===================================================== */
+
+function setStatus(
+ label,
+ message
+){
+
+ document.getElementById(
+  "status"
+ ).innerHTML=
+  "<strong>"+
+  escapeHTML(label)+
+  "</strong> — "+
+  escapeHTML(message);
+
+}
+
+
+/* =====================================================
+   RESET
+===================================================== */
+
+function resetEarth(){
+
+ zoom=1;
+
+ camera.position.z=3.15;
+
+ earth.rotation.set(
+  0,
+  0,
+  0
+ );
+
+}
+
+
+function centerMap(){
+
+ map.setView(
+  [
+   currentLat,
+   currentLon
+  ],
+  12,
+  {
+   animate:true
+  }
+ );
+
+}
+
+
+function openMap(){
+
+ if(
+  !Number.isFinite(currentLat) ||
+  !Number.isFinite(currentLon)
+ ){
+
+  alert(
+   "Search for a location first."
+  );
+
+  return;
+
+ }
+
+
+ window.open(
+  "https://www.openstreetmap.org/?mlat="+
+  currentLat+
+  "&mlon="+
+  currentLon+
+  "#map=12/"+
+  currentLat+
+  "/"+
+  currentLon,
+  "_blank"
+ );
+
+}
+
+
+/* =====================================================
+   HTML ESCAPE
+===================================================== */
+
+function escapeHTML(value){
+
+ return String(value)
+  .replaceAll("&","&amp;")
+  .replaceAll("<","&lt;")
+  .replaceAll(">","&gt;")
+  .replaceAll('"',"&quot;")
+  .replaceAll("'","&#039;");
+
+}
+
+
+/* =====================================================
+   ENTER SEARCH
+===================================================== */
+
+document
+ .getElementById(
+  "locationInput"
+ )
+ .addEventListener(
+  "keydown",
+  function(e){
+
+   if(e.key==="Enter"){
+
+    searchLocation();
+
+   }
+
+  }
+ );
+
+
+/* =====================================================
+   RESIZE
+===================================================== */
+
+window.addEventListener(
+ "resize",
+ function(){
+
+  if(!renderer)return;
+
+  const canvas=
+   document.getElementById(
+    "earth"
+   );
+
+
+  renderer.setSize(
+   canvas.clientWidth,
+   canvas.clientHeight,
+   false
+  );
+
+
+  camera.aspect=
+   canvas.clientWidth/
+   canvas.clientHeight;
+
+
+  camera.updateProjectionMatrix();
+
+
+  if(map){
+
+   map.invalidateSize();
+
+  }
+
+ }
+);
+
+
+/* =====================================================
+   ANIMATION
+===================================================== */
+
+function animate(){
+
+ requestAnimationFrame(
+  animate
+ );
+
+
+ if(
+  earth &&
+  !dragging
+ ){
+
+  earth.rotation.y+=.0008;
+
+ }
+
+
+ if(renderer){
+
+  renderer.render(
+   scene,
+   camera
+  );
+
+ }
+
+}
+
+
+/* =====================================================
+   START
+===================================================== */
+
+initMap();
+
+initEarth();
+
+</script>
+
+</body>
+</html>

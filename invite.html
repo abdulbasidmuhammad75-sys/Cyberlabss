@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Invite | CyberLab</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    min-height:100vh;
+    background:#061411;
+    color:#e8fff8;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+header{
+    min-height:64px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+    padding:10px 22px;
+    background:#081c18;
+    border-bottom:1px solid #123b31;
+}
+
+.logo{
+    color:#35f5b0;
+    font-size:22px;
+    font-weight:800;
+    white-space:nowrap;
+}
+
+nav{
+    display:flex;
+    gap:7px;
+    overflow-x:auto;
+}
+
+nav a{
+    color:#a9c9c0;
+    text-decoration:none;
+    padding:9px 11px;
+    border-radius:8px;
+    font-size:12px;
+    white-space:nowrap;
+}
+
+nav a:hover{
+    background:#10352c;
+    color:#35f5b0;
+}
+
+main{
+    width:min(900px,94%);
+    margin:0 auto;
+    padding:35px 0 50px;
+}
+
+.hero{
+    text-align:center;
+    padding:35px 20px;
+    background:linear-gradient(135deg,#0b251f,#092019);
+    border:1px solid #17473a;
+    border-radius:18px;
+}
+
+.icon{
+    font-size:52px;
+    margin-bottom:12px;
+}
+
+h1{
+    color:#35f5b0;
+    font-size:32px;
+    margin-bottom:12px;
+}
+
+.hero p{
+    color:#a9c9c0;
+    line-height:1.6;
+    max-width:650px;
+    margin:auto;
+}
+
+.invite-box{
+    margin-top:20px;
+    background:#091c18;
+    border:1px solid #164338;
+    border-radius:16px;
+    padding:25px;
+}
+
+.invite-box h2{
+    color:#35f5b0;
+    margin-bottom:10px;
+}
+
+.invite-box p{
+    color:#a9c9c0;
+    line-height:1.6;
+}
+
+.share-row{
+    display:flex;
+    gap:10px;
+    margin-top:20px;
+}
+
+input{
+    flex:1;
+    min-width:0;
+    padding:13px;
+    border-radius:9px;
+    border:1px solid #286452;
+    background:#061411;
+    color:#e8fff8;
+    outline:none;
+}
+
+button{
+    border:0;
+    border-radius:9px;
+    padding:13px 18px;
+    background:#35f5b0;
+    color:#03110d;
+    font-weight:800;
+    cursor:pointer;
+}
+
+button:hover{
+    opacity:.9;
+}
+
+.message{
+    min-height:22px;
+    margin-top:12px;
+    color:#35f5b0;
+    font-size:13px;
+}
+
+.info{
+    margin-top:20px;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:14px;
+}
+
+.card{
+    background:#081b17;
+    border:1px solid #164338;
+    border-radius:13px;
+    padding:18px;
+}
+
+.card strong{
+    display:block;
+    color:#35f5b0;
+    margin-bottom:7px;
+}
+
+.card span{
+    color:#9dbbb3;
+    font-size:13px;
+    line-height:1.5;
+}
+
+.warning{
+    margin-top:20px;
+    padding:17px;
+    background:#201d0b;
+    border:1px solid #665b1c;
+    border-radius:12px;
+    color:#e4dca5;
+    line-height:1.6;
+    font-size:13px;
+}
+
+footer{
+    text-align:center;
+    color:#66877e;
+    font-size:12px;
+    padding:25px 10px;
+    border-top:1px solid #12352d;
+}
+
+@media(max-width:650px){
+    header{
+        padding:10px 12px;
+        align-items:flex-start;
+        flex-direction:column;
+    }
+
+    nav{
+        width:100%;
+    }
+
+    main{
+        padding-top:22px;
+    }
+
+    h1{
+        font-size:27px;
+    }
+
+    .share-row{
+        flex-direction:column;
+    }
+
+    button{
+        width:100%;
+    }
+
+    .info{
+        grid-template-columns:1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">🛡️ CyberLab</div>
+
+    <nav>
+        <a href="index.html">HOME</a>
+        <a href="learn.html">LEARN</a>
+        <a href="lab.html">LAB</a>
+        <a href="network.html">NETWORK</a>
+        <a href="explore.html">EXPLORE</a>
+        <a href="rules.html">RULES</a>
+    </nav>
+</header>
+
+<main>
+
+<section class="hero">
+    <div class="icon">🤝</div>
+    <h1>Invite Someone to CyberLab</h1>
+    <p>
+        Share CyberLab with friends, classmates or other learners who are
+        interested in cybersecurity, networking and responsible technology.
+    </p>
+</section>
+
+<section class="invite-box">
+    <h2>🔗 Share CyberLab</h2>
+
+    <p>
+        Use the button below to copy the public CyberLab website address
+        and share it with someone who wants to learn.
+    </p>
+
+    <div class="share-row">
+        <input
+            id="siteUrl"
+            type="text"
+            readonly
+            value="https://abdulbasidmuhammad75-sys.github.io/Cyberlabss/"
+        >
+
+        <button onclick="copyLink()">COPY LINK</button>
+    </div>
+
+    <div id="message" class="message"></div>
+</section>
+
+<section class="info">
+
+    <div class="card">
+        <strong>📚 Learn</strong>
+        <span>
+            Study cybersecurity fundamentals, networking, privacy and
+            responsible security practices.
+        </span>
+    </div>
+
+    <div class="card">
+        <strong>🧪 Practice</strong>
+        <span>
+            Use controlled educational labs to understand real browser,
+            network and geographic technologies.
+        </span>
+    </div>
+
+    <div class="card">
+        <strong>🛡️ Stay Responsible</strong>
+        <span>
+            Practice only with systems, accounts and devices you own or
+            have explicit permission to test.
+        </span>
+    </div>
+
+</section>
+
+<div class="warning">
+    ⚠️ <strong>RESPONSIBLE LEARNING:</strong>
+    CyberLab is an educational project. Never use cybersecurity tools to
+    access another person's account, device, location or information
+    without authorization.
+</div>
+
+</main>
+
+<footer>
+    CyberLab • Learn • Practice • Defend
+</footer>
+
+<script>
+async function copyLink(){
+
+    const input = document.getElementById("siteUrl");
+    const message = document.getElementById("message");
+
+    try{
+        await navigator.clipboard.writeText(input.value);
+        message.textContent = "✅ CyberLab link copied!";
+    }catch(error){
+        input.select();
+        document.execCommand("copy");
+        message.textContent = "✅ CyberLab link copied!";
+    }
+
+    setTimeout(() => {
+        message.textContent = "";
+    }, 3000);
+}
+</script>
+
+</body>
+</html>
